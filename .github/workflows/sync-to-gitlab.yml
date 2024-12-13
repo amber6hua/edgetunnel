@@ -1,0 +1,33 @@
+name: Sync to GitLab
+
+on:
+  push:
+    branches:
+      - main  # 监听 main 分支的 push 事件，可以根据需要修改为其他分支
+  pull_request:
+    branches:
+      - main  # 或者监听 PR 合并到 main 分支时触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout GitHub code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Configure Git with your user information
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+
+      # Sync code to GitLab
+      - name: Push to GitLab
+        run: |
+          git remote set-url origin https://$GITLAB_TOKEN@$GITLAB_REPO_URL
+          git push origin main  # Push to GitLab's main branch
+        env:
+          GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+          GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}

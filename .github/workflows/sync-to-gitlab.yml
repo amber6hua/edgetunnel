@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main  # 或者监听 PR 合并到 main 分支时触发
+  workflow_dispatch: # 手动触发支持
 
 jobs:
   sync:
@@ -20,8 +21,8 @@ jobs:
       # Configure Git with your user information
       - name: Set up Git
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "ambercc"
+          git config --global user.email "839050651@qq.com"
 
       # Sync code to GitLab
       - name: Push to GitLab

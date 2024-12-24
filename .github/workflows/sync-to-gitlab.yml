@@ -24,4 +24,4 @@ jobs:
           git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@${{ secrets.GITLAB_REPO_URL }}
 
       - name: Push to GitLab
-        run: git push --mirror gitlab
+        run: git push gitlab main

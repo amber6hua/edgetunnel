@@ -19,6 +19,9 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
+      - name: Pull remote changes
+        run: git pull origin main  # 同步远程分支
+
       - name: Add GitLab remote
         run: |
           git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@${{ secrets.GITLAB_REPO_URL }}

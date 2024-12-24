@@ -26,9 +26,9 @@ jobs:
 
       # Sync code to GitLab
       - name: Push to GitLab
-        run: |
-          git remote set-url origin https://$GITLAB_TOKEN@$GITLAB_REPO_URL
-          git push origin main  # Push to GitLab's main branch
         env:
           GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
           GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
+        run: |
+          git remote add gitlab "$GITLAB_REPO_URL"
+          git push --mirror gitlab

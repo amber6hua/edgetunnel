@@ -1,18 +1,19 @@
-name: Sync to GitLab
+name: Sync GitHub to GitLab
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "10 0 * * *" # every day
   workflow_dispatch:
 
 jobs:
-  sync-to-gitlab:
+  sync:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout full Git history
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -21,7 +22,10 @@ jobs:
 
       - name: Add GitLab remote
         run: |
-          git remote add gitlab https://gitlab-ci-token:${{ secrets.GITLAB_TOKEN }}@${{ secrets.GITLAB_REPO_URL }}
+          git remote add gitlab https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/amber6hua/naed.git
 
-      - name: Push to GitLab
-        run: git push gitlab main
+      - name: Push branches to GitLab
+        run: git push --force --all gitlab
+
+      - name: Push tags to GitLab
+        run: git push --force --tags gitlab

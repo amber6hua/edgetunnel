@@ -2,7 +2,7 @@ name: Sync GitHub to GitLab
 
 on:
   schedule:
-    - cron: "30 0 * * *" # every day
+    - cron: "20 0 * * *" # every day
   workflow_dispatch:
 
 jobs:
